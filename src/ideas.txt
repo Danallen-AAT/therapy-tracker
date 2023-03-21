@@ -1,0 +1,11 @@
+Web app for tracking home therapy activities
+Needs:
+Screens = Home, User profile, Listed Activities, Progress
+
+Backend = Store user information, store therapy schedule with activity names and such
+pull from backend the activities for this user when visiting the therapy list page
+
+How to Game-ify it?
+earn coins, badges, show a burst of confetti on the screen when user completes a day
+
+
