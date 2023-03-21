@@ -9,7 +9,7 @@ class SigninScreen extends React.Component {
         super()
         this.state = { username: null, password: null, newuser: false, signinSuccessful: false }
         // this.urlBase = "http://127.0.0.1:5000"
-        this.urlBase = "http://dbtheraventure.c0fjba4pwhsd.us-west-2.rds.amazonaws.com"
+        this.urlBase = "https://dbtheraventure.c0fjba4pwhsd.us-west-2.rds.amazonaws.com"
         this.signinEndpoint = "/login"
         this.newUserEndpoint = "/registeruser"
     }
@@ -86,7 +86,7 @@ class SigninScreen extends React.Component {
                 </div>
 
                 <div className="signin-box">
-                    <h3>Sign In</h3>
+                    <h3>Sign In DEV</h3>
                     <span>Username: </span><input onChange={(e) => loginChange(e, "username")} value={username} />
                     <span>Password: </span><input onChange={(e) => loginChange(e, "password")} value={password} />
                     <button style={{ "margin-top": "5px" }} onClick={this.login.bind(this)}>Sign In</button>
