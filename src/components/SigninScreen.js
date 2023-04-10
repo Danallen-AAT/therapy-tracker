@@ -8,8 +8,7 @@ class SigninScreen extends React.Component {
     constructor() {
         super()
         this.state = { username: null, password: null, newuser: false, signinSuccessful: false }
-        // this.urlBase = "http://127.0.0.1:5000"
-        this.urlBase = "https://dbtheraventure.c0fjba4pwhsd.us-west-2.rds.amazonaws.com"
+        this.urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/"
         this.signinEndpoint = "/login"
         this.newUserEndpoint = "/registeruser"
     }
