@@ -1,115 +1,140 @@
-import React from "react"
-import axios from "axios"
-import { Link } from "react-router-dom"
+import React, { useState } from "react";
+import axios from "axios";
+import { Link} from "react-router-dom";
 
-import "../index.css"
+import "../index.css";
 
-class SigninScreen extends React.Component {
-    constructor() {
-        super()
-        this.state = { username: null, password: null, newuser: false, signinSuccessful: false }
-        this.urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/"
-        this.signinEndpoint = "/login"
-        this.newUserEndpoint = "/registeruser"
-    }
+function SigninScreen({ practiceName }) {
+  // use useState to set the state of the variable username, password, newUser, signinSuccessful
 
-    loginChange(e, type) {
-        this.setState({ ...this.state, [type]: e.target.value })
-    }
+  const [state, setState] = useState({
+    username: null,
+    user_id: null,
+    password: null,
+    newuser: false,
+    signinSuccessful: false,
+  });
 
-    login() {
-        const { username, password } = this.state;
-        const headers = { 'Content-Type': 'application/json' }
-        const body = {
-            "username": username, "password": password
+  const { username, password, newuser, signinSuccessful } = state;
+
+  //   this.userInfo = ;
+  // this.urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/"
+  const urlBase = "http://192.168.0.38:5000";
+  const signinEndpoint = "/login";
+  const newUserEndpoint = "/registeruser";
+  //   constructor() {
+  //     super();
+
+  //   }
+
+  function loginChange(e, type) {
+    setState({ ...state, [type]: e.target.value });
+  }
+
+  function login() {
+    const { username, password } = state;
+    const headers = { "Content-Type": "application/json" };
+    const body = {
+      username: username,
+      password: password,
+    };
+    const config = {
+      method: "POST",
+      url: signinEndpoint,
+      baseURL: urlBase,
+      headers: headers,
+      data: body,
+    };
+    //axios call here
+    axios(config)
+      .then((response) => {
+        const data = response.data;
+        if (!data["user_row"]) {
+          //make a new component visible for the user to "Create account"
+          setState({ ...state, newuser: true });
+        } else {
+          //navigate to homescreen
+          setState({ ...state, signinSuccessful: true, user_id: data.user_row[0] });
         }
-        const config = {
-            method: "POST",
-            url: this.signinEndpoint,
-            baseURL: this.urlBase,
-            headers: headers,
-            data: body
-        }
-        //axios call here
-        axios(config).then(response => {
-            const data = response.data
-            console.log(data)
-            console.log(data["username"])
-            if (!data["username"]) {
-                //make a new component visible for the user to "Create account"
-                this.setState({ ...this.state, newuser: true })
-            } else {
-                //navigate to homescreen
-                this.setState({...this.state, signinSuccessful: true})
-            }
-        }).catch(err => console.log(err))
-    }
+      })
+      .catch((err) => console.log(err));
+  }
 
-    addNewUser() {
-        const { username, password } = this.state;
-        const headers = { 'Content-Type': 'application/json' }
+  function addNewUser() {
+    const { username, password } = state;
+    const headers = { "Content-Type": "application/json" };
+    const config = {
+      method: "POST",
+      baseURL: urlBase,
+      url: newUserEndpoint,
+      headers: headers,
+      data: { username, password },
+    };
 
-        const config = {
-            method: "POST",
-            baseURL: this.urlBase,
-            url: this.newUserEndpoint,
-            headers: headers,
-            data: { username, password }
-        }
+    axios(config).then((response) => {
+      //return the username
+      //navigate to next screen
+      const user_id = response.data.userid
+      setState({ ...state, newuser: false, signinSuccessful: true, user_id });
+    });
+  }
 
-        axios(config).then(response => {
-            console.log(response.data)
-            //return the username
-            //navigate to next screen
-            this.setState({ ...this.state, newuser: false, signinSuccessful: true })
-        })
-        console.log(`newUser: ${username} - ${password}`)
-    }
+  return (
+    <div className="SigninScreen">
+      <div className="banner-section">
+        <h1 className="banner-text">
+          Welcome to <i>{practiceName}</i>
+        </h1>
+      </div>
 
-    goToHomescreen() {
+      <div className="signin-box">
+        <h3>Sign In DEV</h3>
+        <span>Username: </span>
+        <input
+          onChange={(e) => loginChange(e, "username")}
+          value={username}
+        />
+        <span>Password: </span>
+        <input
+          onChange={(e) => loginChange(e, "password")}
+          value={password}
+        />
+        <button style={{ "margin-top": "5px" }} onClick={() => login()}>
+          Sign In
+        </button>
+        {newuser && (
+          <div>
+            <p>No account found. Create one now?</p>
+            <button
+              style={{ "margin-top": "5px" }}
+              onClick={() => addNewUser()}
+            >
+              Create New Account
+            </button>
+          </div>
+        )}
 
-    }
-
-
-    render() {
-        const { practiceName } = this.props;
-        const { username, password, newuser, signinSuccessful } = this.state;
-        //define the loginchange function as a variable here in order to send parameters in the function down below
-        const loginChange = this.loginChange.bind(this);
-        return (
-            <div className="SigninScreen">
-                <div className="banner-section">
-                    <h1 className="banner-text" >
-                        Welcome to <i>{practiceName}</i>
-                    </h1>
-                </div>
-
-                <div className="signin-box">
-                    <h3>Sign In DEV</h3>
-                    <span>Username: </span><input onChange={(e) => loginChange(e, "username")} value={username} />
-                    <span>Password: </span><input onChange={(e) => loginChange(e, "password")} value={password} />
-                    <button style={{ "margin-top": "5px" }} onClick={this.login.bind(this)}>Sign In</button>
-                    {(newuser) &&
-                        <div>
-                            <p>No account found. Create one now?</p>
-                            <button style={{ "margin-top": "5px" }} onClick={this.addNewUser.bind(this)}>Create New Account</button>
-                        </div>
-                    }
-
-                    {
-                        (signinSuccessful) && <div>
-                            <p>Account Created. Click the button to continue to the homepage.</p>
-                            <Link to="/homepage" >
-                                <button>Go</button>
-                            </Link>
-                        </div>
-                    }
-
-
-                </div>
-            </div>
-        )
-    }
+        {signinSuccessful && (
+          <div>
+            <p>
+              Account Created. Click the button to continue to the homepage.
+            </p>
+            <Link
+              to="/homepage"
+              state={{
+                user_id: state.user_id,
+                user: username,
+                pwd: password,
+                practiceName: practiceName,
+              }}
+            >
+              <button>Go</button>
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default SigninScreen
+export default SigninScreen;

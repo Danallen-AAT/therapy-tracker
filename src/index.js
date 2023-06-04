@@ -18,8 +18,8 @@ class Main extends React.Component {
         return (
             <div className='Main'>
                 <Routes>
-                    <Route path="/" element={<SigninScreen practiceName={practiceName} />} />
-                    <Route path="/homepage" element={<HomeScreen practiceName={practiceName} />} />
+                    <Route path="/" element={<SigninScreen state={{practiceName}} practiceName={practiceName} />} />
+                    <Route path="/homepage" element={<HomeScreen state={{practiceName:practiceName}} practiceName={practiceName} />} />
                     <Route path="/therapylist" element={<TherapyList />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/progress" element={<ProgressScreen />} />
