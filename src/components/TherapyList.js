@@ -9,7 +9,10 @@ function TherapyList() {
   ]);
   const location = useLocation();
   const { user_id } = location.state;
-  const urlBase = "http://192.168.0.38:5000";
+  // const urlBase = "http://192.168.0.38:5000";
+  const urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/";
+
+  
   const fetchExercisesEndpoint = "/fetchexercises";
   const addExerciseEndpoint = "/addexercise";
   const headers = { "Content-Type": "application/json" };

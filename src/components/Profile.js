@@ -5,14 +5,15 @@ import axios from "axios";
 import "../index.css";
 
 function Profile() {
-    const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]);
   const location = useLocation();
   const { user_id } = location.state;
-  const urlBase = "http://192.168.0.38:5000";
+  // const urlBase = "http://192.168.0.38:5000";
+  const urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/";
   const headers = { "Content-Type": "application/json" };
 
   useEffect(() => {
-    console.log(user_id)
+    console.log(user_id);
     const body = { user_id };
     const config = {
       method: "POST",
@@ -22,9 +23,9 @@ function Profile() {
       data: body,
     };
     axios(config).then((response) => {
-        console.log(response.data.user_row);
-        const username = response.data.user_row;
-        setUser([username])
+      console.log(response.data.user_row);
+      const username = response.data.user_row;
+      setUser([username]);
     });
   }, []);
 
