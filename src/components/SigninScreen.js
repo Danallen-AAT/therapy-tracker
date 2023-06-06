@@ -88,7 +88,7 @@ function SigninScreen({ practiceName }) {
       </div>
 
       <div className="signin-box">
-        <h3>Sign In DEV</h3>
+        <h3>Sign In</h3>
         <span>Username: </span>
         <input
           onChange={(e) => loginChange(e, "username")}
