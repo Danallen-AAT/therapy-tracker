@@ -10,7 +10,7 @@ function TherapyList() {
   const location = useLocation();
   const { user_id } = location.state;
   // const urlBase = "http://192.168.0.38:5000";
-  const urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/";
+  const urlBase = "https://flask-servicev1.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/";
 
   
   const fetchExercisesEndpoint = "/fetchexercises";
@@ -46,11 +46,8 @@ function TherapyList() {
 
   const addExercise = () => {
     //use setExerciseRows here, which is a state variable down below
-    const new_exercise_name =
-      document.getElementById("new_exercise_name").value;
-    const new_exercise_description = document.getElementById(
-      "new_exercise_description"
-    ).value;
+    const new_exercise_name = document.getElementById("new_exercise_name").value;
+    const new_exercise_description = document.getElementById("new_exercise_description").value;
 
     console.log(user_id);
     const body = {
@@ -79,7 +76,7 @@ function TherapyList() {
         );
       else console.log(response.data.error);
       console.log(exerciseRows);
-    });
+    }).catch((err) => console.log(err));
 
     // setExerciseRows([
     //   {

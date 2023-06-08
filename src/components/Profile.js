@@ -9,7 +9,7 @@ function Profile() {
   const location = useLocation();
   const { user_id } = location.state;
   // const urlBase = "http://192.168.0.38:5000";
-  const urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/";
+  const urlBase = "https://flask-servicev1.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/";
   const headers = { "Content-Type": "application/json" };
 
   useEffect(() => {

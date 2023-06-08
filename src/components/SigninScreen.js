@@ -18,7 +18,7 @@ function SigninScreen({ practiceName }) {
   const { username, password, newuser, signinSuccessful } = state;
 
   //   this.userInfo = ;
-  this.urlBase = "https://flask-service.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/"
+  const urlBase = "https://flask-servicev1.bp0d6s37bhscg.us-west-2.cs.amazonlightsail.com/"
   // const urlBase = "http://192.168.0.38:5000";
   const signinEndpoint = "/login";
   const newUserEndpoint = "/registeruser";
