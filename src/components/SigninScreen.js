@@ -96,6 +96,7 @@ function SigninScreen({ practiceName }) {
         />
         <span>Password: </span>
         <input
+        type="password"
           onChange={(e) => loginChange(e, "password")}
           value={password}
         />
